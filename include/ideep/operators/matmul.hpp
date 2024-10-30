@@ -1064,6 +1064,9 @@ struct matmul_forward : public dnnl::matmul,
         dst_desc,
         op_attr,
         with_bias,
+#ifdef __aarch64__
+        weights.get_hash(),
+#endif
         omp_get_max_threads());
 #ifdef __aarch64__
     auto pd_pair = fetch_or_create(key, [&]() {
@@ -1219,6 +1222,9 @@ struct matmul_forward : public dnnl::matmul,
         dst_desc,
         op_attr,
         with_bias,
+#ifdef __aarch64__
+        weights.get_hash(),
+#endif
         omp_get_max_threads());
 
     // Create pd and primitive
